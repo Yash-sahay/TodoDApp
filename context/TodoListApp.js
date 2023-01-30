@@ -19,7 +19,6 @@ const TodoListAppProvider = ({children}) => {
     const [currentAccountBalance, setCurrentAccountBalance] = useState("");
     
     
-    
 
     
     // Contecting with metamask //

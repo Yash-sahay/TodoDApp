@@ -37,7 +37,7 @@ const MainContainer = () => {
       <div className={styles.main}>
         <div className={styles.header}>
           <div className={styles.text} style={{ color: theme == "light" ? 'black' : 'white' }}>
-            Welcome {currentAccount.name || "Anonymous"}!
+            Welcome {currentAccount?.name || "Anonymous"}!
             <div style={{ color: theme == "light" ? 'black' : 'white', fontSize: 12, opacity: .7 }}>
               &nbsp;Balance: {(currentAccountBalance + " ETH") || 'N/A'}
             </div>
@@ -74,7 +74,6 @@ const MainContainer = () => {
         
           <button
             onClick={() => setIsOpenValue(true)}
-            // onClick={() => todoListCreate({ title: 'yash', description: 'hello', tag: 'yeh' })}
             className={styles.Icon}>
             <FaPlusCircle size={35} />
             <div style={{ width: '80%', fontWeight: 'bold' }}>ADD</div>
@@ -84,10 +83,7 @@ const MainContainer = () => {
           <TodoInfo  {...data} />
         ))}
       </div>
-      {isOpen == true ?
-            <OpenForm onClose={setIsOpenValue} />
-            : ''
-          }
+      {isOpen == true && <OpenForm onClose={setIsOpenValue} todoListCreate={todoListCreate} />}
     </>
   )
 }

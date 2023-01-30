@@ -4,7 +4,7 @@ import TodoInfo from './TodoInfo'
 import CustomDropDown from './CustomDropDown'
 import { TodoContext } from '../context/TodoListApp'
 import { FaMoon, FaPlusCircle } from 'react-icons/fa'
-
+import OpenForm from './OpenForm'
 const MainContainer = () => {
   const data = [
     { label: 'Completed', value: 'Completed', color: '53,139, 126' },
@@ -13,7 +13,6 @@ const MainContainer = () => {
   ]
 
   const { theme, setCurrentAccount, currentAccount, setUserName, getAllTodoList, getUserName, todoListCreate, currentAccountBalance, todoList, setTodoList } = useContext(TodoContext);
-
 
   useEffect(() => {
     getBlockChainTodoData()
@@ -29,8 +28,10 @@ const MainContainer = () => {
       alert(error)
     }
   }
-
-
+  const [isOpen, setIsOpen] = useState(false);
+  function setIsOpenValue(value) {
+    setIsOpen(value);
+  }
   return (
     <>
       <div className={styles.main}>
@@ -68,17 +69,25 @@ const MainContainer = () => {
               label={'Filter by status'}
             />
           </div>
+          <div>
+          </div>
+        
           <button
-            onClick={() => todoListCreate({ title: 'yash', description: 'hello', tag: 'yeh' })}
+            onClick={() => setIsOpenValue(true)}
+            // onClick={() => todoListCreate({ title: 'yash', description: 'hello', tag: 'yeh' })}
             className={styles.Icon}>
-              <FaPlusCircle size={35} /> 
-              <div style={{width: '80%', fontWeight: 'bold'}}>ADD</div>
-            </button>
+            <FaPlusCircle size={35} />
+            <div style={{ width: '80%', fontWeight: 'bold' }}>ADD</div>
+          </button>
         </div>
         {todoList?.map((data) => (
           <TodoInfo  {...data} />
         ))}
       </div>
+      {isOpen == true ?
+            <OpenForm onClose={setIsOpenValue} />
+            : ''
+          }
     </>
   )
 }

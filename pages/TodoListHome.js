@@ -23,7 +23,7 @@ const TodoListHome = () => {
 
     return (
         <div className={styles.container} >
-            {walletDetected ? (
+            {!walletDetected ? (
                 <>
                     <div>
                         <Sidebar />

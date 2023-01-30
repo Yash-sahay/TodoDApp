@@ -10,8 +10,6 @@ const TodoInfo = ({title,description,tag, userId}) => {
   const toggle = () => {
     settoggleValue(!toggleValue);
   };
-
-
   return (
     <div className={styles.todolist_container}>
       <div className={styles.tododata}>

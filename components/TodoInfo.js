@@ -10,6 +10,8 @@ const TodoInfo = ({title,description,tag, userId}) => {
   const toggle = () => {
     settoggleValue(!toggleValue);
   };
+
+  const [allValues, setallValues] = useState({title,description,tag, userId})
   return (
     <div className={styles.todolist_container}>
       <div className={styles.tododata}>
@@ -22,6 +24,9 @@ const TodoInfo = ({title,description,tag, userId}) => {
         )}
         <div style={{ display: 'flex', alignItems: 'center' }}>
           <CustomDropDown
+            value={allValues?.status}
+            name="status"
+            setter={setallValues}
             darkMode
             itemStyle={{
               display: 'flex',
@@ -69,6 +74,9 @@ const TodoInfo = ({title,description,tag, userId}) => {
             </div>
             {/* <div className={styles.contant}>Tag</div> */}
             <CustomDropDown
+            value={allValues?.tag}
+            setter={setallValues}
+            name="tag"
             darkMode
             itemStyle={{
               display: 'flex',

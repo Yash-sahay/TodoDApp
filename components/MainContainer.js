@@ -12,6 +12,8 @@ const MainContainer = () => {
     { label: 'Not Started', value: 'NotStarted', color: '181, 185, 206' },
   ]
 
+  const [allValues, setallValues] = useState({})
+
   const { theme, setCurrentAccount, currentAccount, setUserName, getAllTodoList, getUserName, todoListCreate, currentAccountBalance, todoList, setTodoList } = useContext(TodoContext);
 
   useEffect(() => {
@@ -44,6 +46,9 @@ const MainContainer = () => {
           </div>
           <div style={{ display: 'flex', alignItems: 'center' }}>
             <CustomDropDown
+              value={allValues?.filterStatus}
+              name="filterStatus"
+              setter={setallValues}
               itemStyle={{
                 display: 'flex',
                 justifyContent: 'center',

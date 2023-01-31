@@ -47,6 +47,9 @@ const OpenForm = ({ onClose, todoListCreate }) => {
                             multiline
                         />
                         <CustomDropDown
+                            value={todoValues?.tag}
+                            name="tag"
+                            setter={setTodoValues}
                             darkMode={theme == "dark"}
                             itemStyle={{
                                 display: 'flex',

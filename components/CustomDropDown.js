@@ -14,7 +14,12 @@ const CustomDropDown = ({ data, containerStyle, itemStyle, darkMode = false, lab
     }, [darkMode])
 
     useEffect(() => {
-        
+        data?.map(items => {
+            if(value != "" && items?.value?.includes(value)) {
+                setBgColor(items?.color);
+                setColorValue(null)
+            }
+        })
     }, [])
     
 

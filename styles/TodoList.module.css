@@ -147,11 +147,6 @@
     color: #333;
 }
 
-.btn {
-    display: flex;
-    justify-content: flex-end;
-}
-
 .edit {
     padding: 15px 25px;
     margin-bottom: 20px;
@@ -229,7 +224,7 @@
 }
 .btn {
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-end;
     align-items: center;
     flex-direction: row;
     margin-top: 10px;

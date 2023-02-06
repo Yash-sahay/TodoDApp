@@ -7,6 +7,10 @@
 .textBalance {
     font-size: smaller;
 }
+.dropdown_item:hover {
+    background-color: #1e213b18;
+    margin: 2px;
+}
 
 .Sidebar {
     position: fixed;

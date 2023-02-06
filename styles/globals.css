@@ -101,6 +101,34 @@ a {
   text-decoration: none;
 }
 
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  box-shadow: "nset 0 0 6px grey";
+  border-radius: "5px";
+}
+::-webkit-scrollbar-thumb {
+  background: #373b53;
+  border-radius: 15px;
+  height: 2px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #5c6289;
+  max-height: 10px;
+}
+::-webkit-scrollbar-button:vertical:start:decrement {
+  /* background: `url(${process.env.PUBLIC_URL}/static/icons/arrow-example.png) no-repeat center center`; */
+  display: "block";
+  background-size: 10px;
+}
+::-webkit-scrollbar-button:vertical:end:increment {
+  display: "block";
+  /* background: `url(${process.env.PUBLIC_URL}/static/icons/arrow-example.png) no-repeat center center`, */
+  background-size: 10px;
+}
+
 @media (prefers-color-scheme: dark) {
   html {
     color-scheme: dark;

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import styles from '../styles/TodoList.module.css'
 
 const CustomDropDown = ({ data, containerStyle, itemStyle, darkMode = false, label = 'Select', name, setter, value=false }) => {
 
@@ -39,7 +40,7 @@ const CustomDropDown = ({ data, containerStyle, itemStyle, darkMode = false, lab
                 {isActive &&
                     <div style={{ position: 'absolute', top: 45, borderRadius: 10, background: '#fff', width: '100%', zIndex: 10, boxShadow: '#00000040 0px 3px 8px 0px' }}>
                         {data?.map(items => (
-                            <div onClick={() => changeHandler(items)} style={{ color: '#000', ...itemStyle }}>{items?.label}</div>
+                            <div className={styles.dropdown_item} onClick={() => changeHandler(items)} style={{ color: '#000', ...itemStyle }}>{items?.label}</div>
                         ))}
                     </div>}
             </div>

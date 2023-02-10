@@ -36,7 +36,7 @@ const TodoListHome = () => {
             ) : (
                 <>
                     <div>
-                        <Sidebar />
+                        {/* <Sidebar /> */}
                     </div>
                     <div className={styles.MainContainer} style={{ alignItems: 'center', color: theme != "light" ? 'white' : 'black' }} >
                         <div>Please Connect to Wallet First!</div>

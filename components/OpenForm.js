@@ -1,12 +1,12 @@
 import { TextField } from '@mui/material'
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import styles from '../styles/TodoList.module.css'
 import { FaTimes } from 'react-icons/fa';
 import { motion } from "framer-motion"
 import CustomDropDown from './CustomDropDown';
-import { TodoContext } from '../context/TodoListApp';
+import { getContract, TodoContext } from '../context/TodoListApp';
 
-const OpenForm = ({ onClose, todoListCreate }) => {
+const OpenForm = ({ onClose, todoListCreate, setTodoId, todoId }) => {
 
     const {theme} = useContext(TodoContext)
 
@@ -15,6 +15,28 @@ const OpenForm = ({ onClose, todoListCreate }) => {
     const onChangeHandler = (event, key) => {
         setTodoValues(val => ({ ...val, [key]: event.target.value }))
     }
+
+    const todoListEdit = async ({id, title, description, tag}) => {
+        try {
+             const todoContract = await getContract();
+             const data = await todoContract?.editTodoItem(id, title, description, tag);
+             data?.wait();
+             detectNewAddedData()
+        } catch (error) {
+             console.error("cannot create " + (error));
+        }
+     }
+
+     useEffect(() => {
+
+         onClose()(values => {
+            setTodoValues({...todoValues, ...values})
+            return values;
+        })
+     }, [])
+     
+     console.warn("vall----------------->",todoValues)
+     
 
     return (
         <div className={styles.content}>
@@ -28,10 +50,11 @@ const OpenForm = ({ onClose, todoListCreate }) => {
                 <form className={styles.form} onSubmit={e => e.preventDefault()} >
                     <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
                         <label className={styles.headingfrom}> ADD </label>
-                        <FaTimes size={25} style={{ opacity: 0.8, color: '#ff3333' }} onClick={onClose} />
+                        <FaTimes size={25} style={{ opacity: 0.8, color: '#ff3333' }} onClick={() => onClose({isOpen: false})} />
                     </div>
                     <div className={styles.textinput}>
                         <TextField
+                            value={todoValues?.title}
                             onChange={(e) => onChangeHandler(e, "title")}
                             id="outlined-basic"
                             label="Title"
@@ -39,6 +62,7 @@ const OpenForm = ({ onClose, todoListCreate }) => {
                             sx={{ width: '100%' }}
                         />
                         <TextField
+                            value={todoValues?.description}
                             onChange={(e) => onChangeHandler(e, "description")}
                             id="outlined-basic"
                             label="Description"
@@ -85,11 +109,22 @@ const OpenForm = ({ onClose, todoListCreate }) => {
                         <div className={styles.btn}>
                             <button type="delete" className={styles.dis}>Discard</button>
                             <button onClick={() => {
-                                todoListCreate({
+                                if(!todoId){
+                                    todoListCreate({
+                                        title: todoValues?.title,
+                                        description: todoValues?.description,
+                                        tag: todoValues?.tag
+                                    })
+                                    return;
+                                }
+                                todoListEdit({
+                                    id: todoId,
                                     title: todoValues?.title,
                                     description: todoValues?.description,
                                     tag: todoValues?.tag
                                 })
+                                setTodoId(false);
+                                
                             }
                             }
                                 type="submit" className={styles.sub}>Submit</button>

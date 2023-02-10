@@ -13,6 +13,7 @@ const MainContainer = () => {
   ]
 
   const [allValues, setallValues] = useState({})
+  const [todoId, setTodoId] = useState(false)
 
   const { theme, setCurrentAccount, currentAccount, setUserName, getAllTodoList, getUserName, todoListCreate, currentAccountBalance, todoList, setTodoList } = useContext(TodoContext);
 
@@ -30,10 +31,27 @@ const MainContainer = () => {
       alert(error)
     }
   }
-  const [isOpen, setIsOpen] = useState(false);
-  function setIsOpenValue(value) {
-    setIsOpen(value);
+  const [isOpen, setIsOpen] = useState({isOpen: false});
+  function setIsOpenValue(valueGet) {
+    let val = {}
+    setIsOpen(values =>  {
+      if(!valueGet){
+        val = {...values}
+      }else{
+        val = {...values, ...valueGet}
+      }
+      return val;
+    });
+    console.warn(val, "val---------------------->")
+    return setIsOpen;
   }
+
+
+  useEffect(() => {
+    todoId != false && setIsOpenValue({isOpen: true})
+  }, [todoId]);
+
+
   return (
     <>
       <div className={styles.main}>
@@ -78,17 +96,17 @@ const MainContainer = () => {
           </div>
         
           <button
-            onClick={() => setIsOpenValue(true)}
+            onClick={() => setIsOpenValue({isOpen: true, title: "", description: "", tag: ""})}
             className={styles.Icon}>
             <FaPlusCircle size={35} />
             <div style={{ width: '80%', fontWeight: 'bold' }}>ADD</div>
           </button>
         </div>
         {todoList?.map((data) => (
-          <TodoInfo  {...data} />
+          <TodoInfo  {...data} setTodoId={setTodoId} setIsOpenValue={setIsOpenValue} />
         ))}
       </div>
-      {isOpen == true && <OpenForm onClose={setIsOpenValue} todoListCreate={todoListCreate} />}
+      {isOpen.isOpen == true && <OpenForm todoId={todoId} setTodoId={setTodoId} onClose={setIsOpenValue} todoListCreate={todoListCreate} />}
     </>
   )
 }

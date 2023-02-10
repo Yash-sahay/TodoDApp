@@ -3,13 +3,25 @@ import styles from '../styles/TodoList.module.css'
 import { Dropdown, Input } from 'semantic-ui-react'
 import CustomDropDown from './CustomDropDown'
 import { FaChevronRight } from 'react-icons/fa'
+import { getContract } from '../context/TodoListApp'
 
-const TodoInfo = ({title,description,tag, userId}) => {
+const TodoInfo = ({title,description,tag, userId, setTodoId, setIsOpenValue}) => {
   const [toggleValue, settoggleValue] = useState(false)
   // const [open ,setOpen]=useState()
   const toggle = () => {
     settoggleValue(!toggleValue);
   };
+
+  const deleteItem = async ({id}) => {
+    try {
+         const todoContract = await getContract();
+         const data = await todoContract?.deleteTodoItem(id);
+         data?.wait();
+    } catch (error) {
+         console.error("cannot create " + (error));
+    }
+ }
+
 
   const [allValues, setallValues] = useState({title,description,tag, userId})
   return (
@@ -108,8 +120,16 @@ const TodoInfo = ({title,description,tag, userId}) => {
             label={'Tag'}
             />
           <div className={styles.btn}>
-            <button className={styles.edit}>Edit</button>
-            <button className={styles.delete}>Delete</button>
+            <button onClick={() => {
+              setTodoId(userId)
+              setIsOpenValue({isOpen: true, ...allValues})
+              }} 
+            className={styles.edit}>Edit</button>
+
+            <button onClick={() => {
+              deleteItem({id: userId})
+            }} 
+            className={styles.delete}>Delete</button>
           </div>
           </div>
         </>

@@ -9,6 +9,23 @@ export const TodoContext = createContext();
 
 export const fetchContract = (signerOrProvider) => new ethers.Contract(todoListContractAddress, todoListAbi, signerOrProvider)
 
+
+
+export const getContract = async() => {
+    try {
+      const web3modal = new Web3Modal();
+     const connection  = await web3modal.connect()
+     const provider = new ethers.providers.Web3Provider(connection);
+     const signer  = provider.getSigner();
+     const contract = await fetchContract(signer);
+     console.warn(contract);
+     return contract;
+    }catch (err){
+         console.error(err);
+         return null;
+    }
+ } 
+
 const TodoListAppProvider = ({children}) => {
     
     const [todoList, setTodoList] = useState([]);
@@ -44,20 +61,7 @@ const TodoListAppProvider = ({children}) => {
 
    
 
-    const getContract = async() => {
-       try {
-         const web3modal = new Web3Modal();
-        const connection  = await web3modal.connect()
-        const provider = new ethers.providers.Web3Provider(connection);
-        const signer  = provider.getSigner();
-        const contract = await fetchContract(signer);
-        console.warn(contract);
-        return contract;
-       }catch (err){
-            console.error(err);
-            return null;
-       }
-    } 
+
     
     const todoListCreate = async ({title, description, tag}) => {
        try {
